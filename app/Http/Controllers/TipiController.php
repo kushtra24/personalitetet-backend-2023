@@ -15,7 +15,7 @@ class TipiController extends Controller
   {
     $tipet = Tipi::all();
 
-    return view('tipet.tipet', compact('tipet'));
+    return response()->json($tipet, 200);
   }
 
   /**

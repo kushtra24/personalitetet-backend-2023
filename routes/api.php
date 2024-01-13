@@ -34,32 +34,30 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/register', [RegisteredUserController::class, 'store'])
-                ->middleware('guest')
-                ->name('register');
+  ->middleware('guest')
+  ->name('register');
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
-                ->middleware('guest')
-                ->name('login');
+  ->middleware('guest')
+  ->name('login');
 
 Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
-                ->middleware('guest')
-                ->name('password.email');
+  ->middleware('guest')
+  ->name('password.email');
 
 Route::post('/reset-password', [NewPasswordController::class, 'store'])
-                ->middleware('guest')
-                ->name('password.store');
+  ->middleware('guest')
+  ->name('password.store');
 
 Route::get('/verify-email/{id}/{hash}', VerifyEmailController::class)
-                ->middleware(['auth', 'signed', 'throttle:6,1'])
-                ->name('verification.verify');
+  ->middleware(['auth', 'signed', 'throttle:6,1'])
+  ->name('verification.verify');
 
 Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-                ->middleware(['auth', 'throttle:6,1'])
-                ->name('verification.send');
+  ->middleware(['auth', 'throttle:6,1'])
+  ->name('verification.send');
 
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-                ->middleware('auth')
-                ->name('logout');
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth')->name('logout');
 
 
 Route::get('/blog', [PostController::class, 'blog'])->name('blog');
@@ -93,7 +91,7 @@ Route::get('faqe/{slug}', function ($slug) {
 });
 
 Route::group(['tipet' => 'tipet'], function () {
-  Route::get('/tipet', [TipiController::class, 'index'])->name('tipet');
+  Route::get('/personalityTypes', [TipiController::class, 'index'])->name('tipet');
   Route::get('/tipi/{name}', [TipiController::class, 'show'])->name('tipi');
 });
 
@@ -137,7 +135,8 @@ Route::middleware(['auth:sanctum', 'admin'])->post('/faqet/{id}/delete', [PageCo
 //Comments
 Route::middleware(['auth:sanctum', 'admin'])->get('/comments', [CommentController::class, 'index']);
 Route::middleware(['auth:sanctum', 'admin'])->get('/comments/create', [CommentController::class, 'create']);
-Route::middleware(['auth:sanctum', 'admin'])->post('/post/{post}/comment', 'CommentController@store')->name('comment.store');
+Route::middleware(['auth:sanctum', 'admin'])->post('/post/{post}/comment', 'CommentController@store')
+  ->name('comment.store');
 Route::middleware(['auth:sanctum', 'admin'])->get('/comments/{id}', [CommentController::class, 'show']);
 // Route::middleware(['auth:sanctum', 'admin'])->get('/comments/{id}/edit', [CommentController::class, 'edit']);
 Route::middleware(['auth:sanctum', 'admin'])->post('/comments/{id}/update', [CommentController::class, 'update']);
