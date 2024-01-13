@@ -18,12 +18,12 @@ class PostController extends Controller
     {
       $posts = Post::orderBy('id','desc')->paginate(10);
 
-      return view('post.index', compact('posts'));
+      return response()->json($posts, 200);
+      // return view('post.index', compact('posts'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
+    
     public function create()
     {
       $categories = Category::all();
@@ -33,10 +33,14 @@ class PostController extends Controller
       return view('post.create', compact('categories', 'posts'));
     }
 
+
     /**
      * Store a newly created resource in storage.
+     *
+     * @param Request $request
+     * @return string
      */
-    public function store(Request $request)
+    public function store(Request $request): string
     {
       $store = new Post;
 
