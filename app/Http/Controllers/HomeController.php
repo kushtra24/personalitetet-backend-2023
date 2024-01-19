@@ -23,12 +23,11 @@ class HomeController extends Controller
    */
   public function index()
   {
-    $results = auth()->user()->testResults->last();
+    $user =  auth('sanctum')->user();
 
-    Carbon::setLocale('sq');
-    // Carbon::setUtf8(true);
+    $results = $user->testResults->last();
 
-    return view('home')->with('results', $results);
+    return response()->json($results, 200);
   }
 
   
@@ -39,7 +38,7 @@ class HomeController extends Controller
      */
     public function tipet()
     {
-        return view('tipet');
+      // return response()->json($type, 200);
     }
  
 }
