@@ -57,19 +57,19 @@ Route::post('/email/verification-notification', [EmailVerificationNotificationCo
   ->middleware(['auth', 'throttle:6,1'])
   ->name('verification.send');
 
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth')->name('logout');
+// Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth');
 
 
-Route::get('/blog', [PostController::class, 'blog'])->name('blog');
-Route::get('/archiveFilter', [PostController::class, 'archiveFilterd'])->name('archiveFilterd');
-Route::get('/categoryfilter/{category}', [CategoryController::class, 'categoryfilter'])->name('categoryfilter');
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/blog', [PostController::class, 'blog']);
+Route::get('/archiveFilter', [PostController::class, 'archiveFilterd']);
+Route::get('/categoryfilter/{category}', [CategoryController::class, 'categoryfilter']);
+Route::get('/home', [HomeController::class, 'index']);
 
 Route::group(['test' => 'test'], function () {
-  Route::get('/vlersimi', [TestController::class, 'doTheTest'])->name('testi');
+  Route::get('/getQuestion', [TestController::class, 'doTheTest']);
   // Route::get('/result', 'Auth\RegisterController@notvalide');
-  Route::post('/result', [TestController::class, 'introExtroQuestions'])->name('result'); //->middleware('throttle:1,2')
-  Route::get('/result', [TestController::class, 'introExtroQuestionsResult']);
+  Route::post('/result', [TestController::class, 'introExtroQuestions']);
+  // Route::get('/result', [TestController::class, 'introExtroQuestionsResult']);
 });
 
 
@@ -91,8 +91,8 @@ Route::get('faqe/{slug}', function ($slug) {
 });
 
 Route::group(['tipet' => 'tipet'], function () {
-  Route::get('/personalityTypes', [TipiController::class, 'index'])->name('tipet');
-  Route::get('/tipi/{name}', [TipiController::class, 'show'])->name('tipi');
+  Route::get('/personalityTypes', [TipiController::class, 'index']);
+  Route::get('/type/{id}', [TipiController::class, 'show']);
 });
 
 
@@ -136,7 +136,7 @@ Route::middleware(['auth:sanctum', 'admin'])->post('/faqet/{id}/delete', [PageCo
 Route::middleware(['auth:sanctum', 'admin'])->get('/comments', [CommentController::class, 'index']);
 Route::middleware(['auth:sanctum', 'admin'])->get('/comments/create', [CommentController::class, 'create']);
 Route::middleware(['auth:sanctum', 'admin'])->post('/post/{post}/comment', 'CommentController@store')
-  ->name('comment.store');
+  ;
 Route::middleware(['auth:sanctum', 'admin'])->get('/comments/{id}', [CommentController::class, 'show']);
 // Route::middleware(['auth:sanctum', 'admin'])->get('/comments/{id}/edit', [CommentController::class, 'edit']);
 Route::middleware(['auth:sanctum', 'admin'])->post('/comments/{id}/update', [CommentController::class, 'update']);
