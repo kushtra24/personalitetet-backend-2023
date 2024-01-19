@@ -36,7 +36,7 @@ class TestController extends Controller
     $questions = $questions->shuffle();
 
 
-    return view('testi.create', compact('questions'));
+    return response()->json($questions, 200);
   }
 
   /**
@@ -70,7 +70,7 @@ class TestController extends Controller
   {
     $user = User::find($request->id);
 
-    return view('home', compact('user'));
+    return response()->json($user, 200);
   }
 
   /**
@@ -86,16 +86,18 @@ class TestController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function introExtroQuestionsResult()
-  {
+  // public function introExtroQuestionsResult()
+  // {
 
-    $results = Test::latest()->first();
+  //   $results = Test::latest()->first();
 
-    return view('testi.result', compact('results', 'typeDescription'));
-  }
+  //   return response()->json($results, 200);
+
+  //   // return view('testi.result', compact('results', 'typeDescription'));
+  // }
 
 
-  public function introExtroQuestions()
+  public function introExtroQuestions(Request $request)
   {
 
     // store the final results of the question
@@ -105,7 +107,7 @@ class TestController extends Controller
     $jundgingPercivingResult = 0;
 
     // get all questions and evaluate the perpose   
-    foreach (request()->input('q') as $qid => $value) {
+    foreach ($request->all() as $qid => $value) {
       $question = Question::find($qid);
       if ($question->purpose == 'IntroExtro') {
         $introExtroResult += $value;
@@ -207,7 +209,6 @@ class TestController extends Controller
 //Evaluates the section of intuitive or Sensing, working with the partial intuitiveSensing.blade.php testi > partials
 public function intuitiveOrSensing($result){
     
-    
   if ($result < 0) {
       $this->intuSens = "Shqisor";
   }
@@ -229,7 +230,6 @@ public function intuitiveOrSensing($result){
 //Evaluates the section of Feeling or Thinking, working with the partial thinkingFeeling.blade.php testi > partials
   public function feelingOrThinking($result){
 
-      
       if ($result < 0) {
           $this->feelingThinking = "Arsye";
       }
@@ -251,7 +251,6 @@ public function intuitiveOrSensing($result){
 //Evaluates the section of Judging or Perspekting, working with the partial judgingPerspecting.blade.php testi > partials
   public function judgingOrperspecting($result){
 
-      
       if ($result < 0) {
           $this->judgingPerspecting = "Kërkues";
       }
