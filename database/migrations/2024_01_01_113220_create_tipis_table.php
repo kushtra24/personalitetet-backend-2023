@@ -15,15 +15,6 @@ return new class extends Migration
       $table->increments('id');
       $table->string('type');
       $table->string('name');
-      $table->text('shortDescription')->nullable();
-      $table->text('hyrje')->nullable();
-      $table->text('forcatDobesit')->nullable();
-      $table->text('lidhjet')->nullable();
-      $table->text('miqesite')->nullable();
-      $table->text('siPrinder')->nullable();
-      $table->text('profesioni')->nullable();
-      $table->text('vendiPunes')->nullable();
-      $table->text('shtese')->nullable();
       $table->string('type_img')->nullable();
       $table->string('feat_img')->nullable();
       $table->timestamps();

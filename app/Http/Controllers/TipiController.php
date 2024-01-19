@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tipi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class TipiController extends Controller
 {
@@ -25,7 +26,7 @@ class TipiController extends Controller
   {
     $tipet = Tipi::all();
 
-    return view('tipet.admintipet', compact('tipet'));
+    return response()->json($tipet, 200);
   }
 
   /**
@@ -33,18 +34,19 @@ class TipiController extends Controller
    */
   public function store(Request $request)
   {
-    Carbon::setLocale('sq');
-    // Carbon::setUtf8(true);
-
-    return view('tipet.tipi', ['tipi' => $request->name]);
+    $type = $request->all();
+    return response()->json($type, 200);
   }
 
   /**
    * Display the specified resource.
    */
-  public function show(Tipi $tipi)
+  public function show($name)
   {
-    //
+    $types = Tipi::where("type", '=', $name)->first();
+    Log::alert($types);
+
+    return response()->json($types, 200);
   }
 
   /**
