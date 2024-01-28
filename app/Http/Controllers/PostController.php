@@ -19,7 +19,6 @@ class PostController extends Controller
       $posts = Post::orderBy('id','desc')->paginate(10);
 
       return response()->json($posts, 200);
-      // return view('post.index', compact('posts'));
     }
 
 
@@ -64,35 +63,16 @@ class PostController extends Controller
       // }
 
       $store->Category()->attach($request->input('category'));
-
-      // if ($store->save()) {
-      //     $request->session()->flash('message.level', 'success');
-      //     $request->session()->flash('message.content', 'Faqja eshte publikuar me sukses');
-      // } else {
-      //     $request->session()->flash('message.level', 'danger');
-      //     $request->session()->flash('message.content', 'Dicka nuk shkoje mirë!');
-      // }
-
-      return redirect('post');
+      return response()->json($store, 200);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show($id)
     {
-      $postet = Post::find($post->id);
-
-      // $slug = makeSlugFromTitle($postet->title);
-      
-      $archives = Post::archives();
-
-      $categories = Category::all();
-
-      Carbon::setLocale('sq');
-      // Carbon::setUtf8(true);
-
-      return view('post.show', compact('postet', 'archives', 'categories'));
+      $post = Post::with("media", "categories")->find($id);
+      return response()->json($post, 200);
     }
 
     /**
@@ -191,15 +171,13 @@ class PostController extends Controller
 
   public function blog(){
 
-      $posts = Post::with("user", "media", "category")->orderBy('id','desc')->paginate(4);
+      $posts = Post::with("media", "categories")->orderBy('id','desc')->paginate(4);
 
-      $archives = Post::archives();
+      // $archives = Post::archives();
 
-      $categories = Category::all();
-      
-      // $postCounter = Post::count('id');
+      // $categories = Category::all();
 
-      return view('post.blog', compact('posts', 'archives', 'categories'));
+      return response()->json($posts, 200);
   }
 
 

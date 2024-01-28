@@ -57,10 +57,10 @@ Route::post('/email/verification-notification', [EmailVerificationNotificationCo
   ->middleware(['auth', 'throttle:6,1'])
   ->name('verification.send');
 
-// Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth');
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth');
 
 
-Route::get('/blog', [PostController::class, 'blog']);
+Route::get('/blogPosts', [PostController::class, 'blog']);
 Route::get('/archiveFilter', [PostController::class, 'archiveFilterd']);
 Route::get('/categoryfilter/{category}', [CategoryController::class, 'categoryfilter']);
 Route::get('/home', [HomeController::class, 'index']);
@@ -106,7 +106,7 @@ Route::middleware(['auth:sanctum', 'admin'])->get('/admin', [AdminController::cl
 //Posts
 Route::middleware(['auth:sanctum', 'admin'])->get('/post', [PostController::class, 'index']);
 Route::middleware(['auth:sanctum', 'admin'])->get('/post/create', [PostController::class, 'create']);
-Route::middleware(['auth:sanctum'])->get('/blog/{id}', 'PostController@show');
+Route::get('/blog/{id}', [PostController::class, 'show']);
 // Route::middleware(['auth:sanctum', 'admin'])->get('/post/edit/{id}', [PostController::class, 'edit']);
 Route::middleware(['auth:sanctum', 'admin'])->post('/post/store', [PostController::class, 'store']);
 Route::middleware(['auth:sanctum', 'admin'])->post('/post/{id}/update', [PostController::class, 'update']);
@@ -133,26 +133,22 @@ Route::middleware(['auth:sanctum', 'admin'])->post('/faqet/{id}/update', [PageCo
 Route::middleware(['auth:sanctum', 'admin'])->post('/faqet/{id}/delete', [PageController::class, 'destroy']);
 
 //Comments
-Route::middleware(['auth:sanctum', 'admin'])->get('/comments', [CommentController::class, 'index']);
-Route::middleware(['auth:sanctum', 'admin'])->get('/comments/create', [CommentController::class, 'create']);
-Route::middleware(['auth:sanctum', 'admin'])->post('/post/{post}/comment', 'CommentController@store')
-  ;
-Route::middleware(['auth:sanctum', 'admin'])->get('/comments/{id}', [CommentController::class, 'show']);
-// Route::middleware(['auth:sanctum', 'admin'])->get('/comments/{id}/edit', [CommentController::class, 'edit']);
-Route::middleware(['auth:sanctum', 'admin'])->post('/comments/{id}/update', [CommentController::class, 'update']);
-Route::middleware(['auth:sanctum', 'admin'])->post('/comments/delete/{id}', [CommentController::class, 'destroy']);
+// Route::middleware(['auth:sanctum', 'admin'])->get('/comments', [CommentController::class, 'index']);
+// Route::middleware(['auth:sanctum', 'admin'])->get('/comments/create', [CommentController::class, 'create']);
+// Route::middleware(['auth:sanctum', 'admin'])->post('/post/{post}/comment', 'CommentController@store');
+// Route::middleware(['auth:sanctum', 'admin'])->get('/comments/{id}', [CommentController::class, 'show']);
+// // Route::middleware(['auth:sanctum', 'admin'])->get('/comments/{id}/edit', [CommentController::class, 'edit']);
+// Route::middleware(['auth:sanctum', 'admin'])->post('/comments/{id}/update', [CommentController::class, 'update']);
+// Route::middleware(['auth:sanctum', 'admin'])->post('/comments/delete/{id}', [CommentController::class, 'destroy']);
 
 //Category
-Route::middleware(['auth:sanctum', 'admin'])->get('/categories', [CategoryController::class, 'index']);
-Route::middleware(['auth:sanctum', 'admin'])->get('/categories/create', [CategoryController::class, 'create']);
-Route::middleware(['auth:sanctum', 'admin'])->get('/categories/{id}', 'CategoryController@show');
-// Route::middleware(['auth:sanctum', 'admin'])->get('/categories/{id}/edit', [CategoryController::class, 'edit']);
+Route::get('/categories', [CategoryController::class, 'index']);
 Route::middleware(['auth:sanctum', 'admin'])->post('/categories/store', [CategoryController::class, 'store']);
 Route::middleware(['auth:sanctum', 'admin'])->post('/categories/{id}/update', [CategoryController::class, 'update']);
 Route::middleware(['auth:sanctum', 'admin'])->post('/categories/delete/{id}', [CategoryController::class, 'destroy']);
 
 //profile
-Route::middleware(['auth:sanctum'])->get('/profile', [UserController::class, 'index']);
+Route::middleware(['auth:sanctum'])->get('/profile', [UserController::class, 'profile']);
 Route::middleware(['auth:sanctum'])->get('/profili/{id}/edit', [UserController::class, 'edit']);
 Route::middleware(['auth:sanctum'])->post('/profili/{id}/update', [UserController::class, 'update']);
 

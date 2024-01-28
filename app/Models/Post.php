@@ -17,6 +17,10 @@ class Post extends Model
         return asset("storage/$value");
     }
 
+    public function media(): BelongsTo {
+      return $this->BelongsTo(Media::class, 'image_id');      
+    }
+
     public function comments(): HasMany{
     	return $this->hasMany(Comment::class);
     }
@@ -26,7 +30,8 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function category(): BelongsToMany{
+
+    public function categories(): BelongsToMany{
         // this is a many to many stable it links many categories to many posts
         return $this->belongsToMany(Category::class, 'category_post');
     }

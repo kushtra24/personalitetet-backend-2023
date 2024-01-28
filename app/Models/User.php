@@ -23,6 +23,8 @@ class User extends Authenticatable
   protected $hidden = [
     'password',
     'remember_token',
+    'email_token',
+    'updated_at'
   ];
 
   /**
@@ -84,11 +86,6 @@ class User extends Authenticatable
     return $this->hasMany(Post::class);
   }
 
-  // public function comment()
-  // {
-  //   return $this->hasMany(Comment::Class);
-  // }
-
   /**
    * Get the comments for the blog post.
    */
@@ -97,7 +94,7 @@ class User extends Authenticatable
     return $this->hasMany(Comment::class);
   }
 
-  public function setageAttribute($value)
+  public function setAgeAttribute($value)
   {
     $this->attributes['age'] =  Carbon::parse($value);
   }
