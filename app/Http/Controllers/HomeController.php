@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -23,11 +23,19 @@ class HomeController extends Controller
    */
   public function index()
   {
-    $user =  auth('sanctum')->user();
+    if (Auth::check()) {
+      // User is authenticated
+      $user = auth()->user();
+      Log::info($user);
+      
+      $results = $user->testResults?->last();
+  
+      return response()->json($results, 200);
+  } else {
+      // User is not authenticated
+      return response()->json(['message' => 'User is not authenticated'], 401);
+  }
 
-    $results = $user->testResults->last();
-
-    return response()->json($results, 200);
   }
 
   
